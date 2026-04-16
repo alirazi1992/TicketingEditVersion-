@@ -1,0 +1,60 @@
+                          <div className="flex items-center gap-2 mt-2">
+                            <Badge variant="secondary" className="text-xs font-iran">
+                              {Array.isArray(subCategory.fields) ? subCategory.fields.length : 0} فیلد سفارشی
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setEditingSubCategory({ ...subCategory, id: key })}
+                            className="font-iran"
+                          >
+                            <Edit className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm("آیا از حذف این زیر دسته اطمینان دارید؟")) {
+                                handleDeleteSubCategory(key)
+                              }
+                            }}
+                            className="text-red-600 hover:text-red-700 font-iran"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                )}
+                {Object.keys(categoriesData[selectedCategory]?.subIssues || {}).length === 0 && (
+                  <div className="text-center py-8">
+                    <FolderPlus className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                    <p className="text-muted-foreground font-iran">هیچ زیر دسته‌ای وجود ندارد</p>
+                    <p className="text-sm text-muted-foreground font-iran">برای شروع یک زیر دسته جدید ایجاد کنید</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <Settings className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                <p className="text-muted-foreground font-iran">دسته‌بندی انتخاب کنید</p>
+                <p className="text-sm text-muted-foreground font-iran">
+                  برای مشاهده زیر دسته‌ها، یک دسته‌بندی انتخاب کنید
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Edit Category Dialog */}
+      {editingCategory && (
+        <Dialog open={!!editingCategory} onOpenChange={() => setEditingCategory(null)}>
+          <DialogContent className="max-w-md font-iran" dir="rtl">
+            <DialogHeader>
+              <DialogTitle className="text-right font-iran">ویرایش دسته‌بندی</DialogTitle>
+            </DialogHeader>

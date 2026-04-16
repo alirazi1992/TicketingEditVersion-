@@ -1,0 +1,67 @@
+{
+  // File Watcher Excludes - Prevent watching regeneratable folders
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/bin/**": true,
+    "**/obj/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.vite/**": true,
+    "**/App_Data/**": true,
+    "**/*.db": true,
+    "C:/Users/**": true
+  },
+
+  // Search Excludes - Prevent searching in large folders
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.vite": true,
+    "**/App_Data": true,
+    "**/*.db": true,
+    "**/src/**/bin": true,
+    "**/src/**/obj": true,
+    "C:/Users/**": true
+  },
+
+  // File Excludes - Hide from explorer (optional, can be toggled)
+  "files.exclude": {
+    "**/.git": false,
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.vite": true
+  },
+
+  // TypeScript - Optimize performance
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "typescript.preferences.excludePackageJsonAutoImports": "on",
+  "typescript.disableAutomaticTypeAcquisition": false,
+
+  // Editor performance optimizations
+  "editor.suggest.maxVisibleSuggestions": 12,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+
+  // Editor indexing
+  "cursor.general.enableIndexing": true,
+
+  // Additional performance settings
+  "files.maxMemoryForLargeFilesMB": 4096,
+  "search.followSymlinks": false,
+  "search.smartCase": true
+}
+

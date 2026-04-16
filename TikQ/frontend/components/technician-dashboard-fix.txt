@@ -1,0 +1,72 @@
+FIXES NEEDED IN technician-dashboard.tsx:
+
+1. After line 156, add:
+   const loadingProfileRef = useRef(false);
+
+2. Replace lines 186-206 with:
+   // Load technician profile and check if current user is supervisor
+   useEffect(() => {
+     const loadTechnicianProfileAndCheckSupervisor = async () => {
+       if (!token || !currentUser?.id || loadingProfileRef.current) return;
+       
+       loadingProfileRef.current = true;
+       try {
+         // Get current technician's profile (includes isSupervisor)
+         const myProfile = await getMyTechnicianProfile(token);
+         setIsSupervisor(myProfile?.isSupervisor || false);
+         
+         // Only load assignable technicians if user is a supervisor
+         if (myProfile?.isSupervisor) {
+           try {
+             const assignableTechs = await getAssignableTechnicians(token);
+             setAvailableTechnicians(assignableTechs);
+           } catch (error: any) {
+             // If 403, user is not actually a supervisor (edge case)
+             if (error?.status === 403) {
+               console.warn("User marked as supervisor but access denied to assignable technicians");
+               setIsSupervisor(false);
+             } else {
+               console.error("Failed to load assignable technicians:", error);
+             }
+           }
+         } else {
+           // Not a supervisor, clear the list
+           setAvailableTechnicians([]);
+         }
+       } catch (error: any) {
+         console.error("Failed to load technician profile:", error);
+         // Don't crash the dashboard - just log the error
+         if (error?.status === 403) {
+           console.warn("Access denied to technician profile endpoint");
+         }
+       } finally {
+         loadingProfileRef.current = false;
+       }
+     };
+     
+     loadTechnicianProfileAndCheckSupervisor();
+   }, [token, currentUser?.id]);
+
+3. Replace line 350-358 with:
+   // Load technicians for handoff if needed (only if supervisor)
+   if (token && isSupervisor && ticket.assignedTechnicians?.some((at: any) => at.isActive && at.technicianUserId === currentUser?.id)) {
+     try {
+       const techs = await getAssignableTechnicians(token);
+       setAvailableTechnicians(techs.filter(t => t.isActive));
+     } catch (err: any) {
+       console.error("Failed to load technicians:", err);
+       // If 403, user is not actually a supervisor
+       if (err?.status === 403) {
+         setIsSupervisor(false);
+       }
+     }
+   }
+
+
+
+
+
+
+
+
+

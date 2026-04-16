@@ -1,0 +1,44 @@
+﻿# Fix NU1301: disable offline NuGet source, clear caches, restore, then run EF migrations list.
+# Run from repo root or set $RepoRoot to your TikQ path.
+# Reversible: re-enable source with: dotnet nuget enable source "Microsoft Visual Studio Offline Packages"
+
+param(
+    [string]$RepoRoot = (Split-Path -Parent $PSScriptRoot)
+)
+
+$ErrorActionPreference = "Stop"
+$backendDir = Join-Path (Join-Path $RepoRoot "backend") "Ticketing.Backend"
+
+Write-Host "[1/4] Disabling NuGet source 'Microsoft Visual Studio Offline Packages' (user-level)..." -ForegroundColor Cyan
+try {
+    dotnet nuget disable source "Microsoft Visual Studio Offline Packages" 2>$null
+    Write-Host "      Disabled." -ForegroundColor Green
+} catch {
+    Write-Host "      Source may already be disabled or name differs. Continuing." -ForegroundColor Yellow
+}
+
+Write-Host "[2/4] Clearing NuGet caches..." -ForegroundColor Cyan
+dotnet nuget locals all --clear
+Write-Host "      Done." -ForegroundColor Green
+
+Write-Host "[3/4] Restore (no-cache, force) in $backendDir ..." -ForegroundColor Cyan
+Push-Location $backendDir
+try {
+    dotnet restore --no-cache --force
+    Write-Host "      Restore succeeded." -ForegroundColor Green
+} finally {
+    Pop-Location
+}
+
+Write-Host "[4/4] EF migrations list..." -ForegroundColor Cyan
+Push-Location $backendDir
+try {
+    dotnet ef migrations list
+    Write-Host "      Done." -ForegroundColor Green
+} finally {
+    Pop-Location
+}
+
+Write-Host ""
+Write-Host "To re-enable the offline source later: dotnet nuget enable source `"Microsoft Visual Studio Offline Packages`"" -ForegroundColor Gray
+

@@ -1,0 +1,40 @@
+                          <h5 className="font-medium font-iran">{subCategory.label}</h5>
+                          {subCategory.description && (
+                            <p className="text-sm text-muted-foreground mt-1 font-iran">{subCategory.description}</p>
+                          )}
+                        </div>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setEditingSubCategory({ ...subCategory, id: key })}
+                            className="font-iran"
+                          >
+                            <Edit className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm("آیا از حذف این زیر دسته اطمینان دارید؟")) {
+                                handleDeleteSubCategory(key)
+                              }
+                            }}
+                            className="text-red-600 hover:text-red-700 font-iran"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                )}
+                {Object.keys(categoriesData[selectedCategory]?.subIssues || {}).length === 0 && (
+                  <div className="text-center py-8">
+                    <FolderPlus className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                    <p className="text-muted-foreground font-iran">هیچ زیر دسته‌ای وجود ندارد</p>
+                    <p className="text-sm text-muted-foreground font-iran">برای شروع یک زیر دسته جدید ایجاد کنید</p>
+                  </div>
+                )}
+              </div>
+            ) : (

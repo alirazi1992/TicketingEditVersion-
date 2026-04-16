@@ -1,0 +1,130 @@
+# =========================
+# Node / Next.js (ROOT)
+# =========================
+node_modules/
+.next/
+tsconfig.tsbuildinfo
+
+# =========================
+# Frontend (Next.js)
+# =========================
+frontend/node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# =========================
+# Backend (.NET)
+# =========================
+backend/**/bin/
+backend/**/obj/
+
+# =========================
+# Environment
+# =========================
+.env
+.env.local
+.env*.local
+
+# =========================
+# Development coordination
+# =========================
+.dev/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# IDE / OS
+# =========================
+# Note: .vscode/settings.json should be committed for team consistency
+.vscode/*
+!.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+# SQLite
+*.db
+App_Data/
+
+# =========================
+# SonarQube / SonarScanner (optional; not required for build/deploy)
+# =========================
+.sonarqube/
+# Allow stub so MSBuild does not look for SonarQube.Integration.targets
+!.sonarqube/bin/
+!.sonarqube/bin/targets/
+!.sonarqube/bin/targets/SonarQube.Integration.targets
+.scannerwork/
+sonarqube/
+**/sonar-project.properties
+**/sonar.properties
+report-task.txt# build caches
+frontend/tsconfig.tsbuildinfo
+
+# local curl cookies (handoff tests)
+backend/Ticketing.Backend/cookies*.txt
+tools/_handoff_tests/cookies-*.txt
+
+# Next.js build output
+.next/
+frontend/.next/
+
+# local logs
+*.log
+
+# local curl cookies anywhere
+cookies*.txt
+
+# local handoff test payloads
+tools/_handoff_tests/login-*.json
+backend/Ticketing.Backend/login*.json
+
+
+# Visual Studio
+.vs/
+
+# SonarQube scanner artifacts
+**/.sonarqube/
+**/.sonar/
+
+# Backup folders / local data dumps
+**/App_Data_BAK_*/
+**/*_BAK_*/
+
+# Build outputs
+bin/
+obj/
+
+
+# Visual Studio
+.vs/
+
+# SonarQube scanner artifacts
+**/.sonarqube/
+
+# Build outputs
+bin/
+obj/
+
+# local / machine-specific
+backend/Ticketing.Backend/appsettings.Development.json
+
+# temp / experiments
+frontend/lib/api.ts
+
+# local-only test scripts (enable later if sanitized)
+tools/test-handoff-users.ps1
+tools/verify-get-ticket.ps1
+tools/verify-supervisor-techs.ps1
+
+# --- local/dev-only (do not ship) ---
+backend/Ticketing.Backend/appsettings.Development.json
+frontend/lib/api.ts
