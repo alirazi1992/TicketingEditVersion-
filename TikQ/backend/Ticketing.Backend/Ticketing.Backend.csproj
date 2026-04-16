@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Optional but helps tooling / naming -->
+    <RootNamespace>Ticketing.Backend</RootNamespace>
+    <AssemblyName>Ticketing.Backend</AssemblyName>
+
+    <!-- IIS: in-process hosting for production deployment -->
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- EF Core + SQLite + SQL Server -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!-- Auth / JWT + Windows Negotiate -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
+
+    <!-- Swagger / OpenAPI -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+
+    <!-- Excel export -->
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
+
+    <!-- SQL Server client for read-only Company DB (ADO.NET only, no EF) -->
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <!-- AD/LDAP lookup for Windows Integrated Auth (no password storage) -->
+    <PackageReference Include="System.DirectoryServices" Version="8.0.0" />
+    <!-- BCrypt for Company Directory password verification when org DB uses BCrypt hashes -->
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Exclude src/ tree (do not compile); main app uses Api/, Application/, Domain/, Infrastructure/ -->
+    <Compile Remove="src\**\*.cs" />
+    <None Remove="src\**\*" />
+    <EmbeddedResource Remove="src\**\*" />
+  </ItemGroup>
+
+  <!-- Main app uses root-level Infrastructure (Api, Application, Domain, Infrastructure). -->
+  <!-- src\Ticketing.Infrastructure is legacy and was causing MSB4276 workload SDK resolution failures. -->
+
+  <ItemGroup>
+    <Content Update="appsettings.Production.json">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

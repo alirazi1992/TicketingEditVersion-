@@ -1,0 +1,6 @@
+<Project>
+  <!-- Avoid MSB4276: WorkloadAutoImportPropsLocator / WorkloadManifestTargetsLocator SDK not found -->
+  <PropertyGroup>
+    <DisableImplicitWorkloads>true</DisableImplicitWorkloads>
+  </PropertyGroup>
+</Project>
